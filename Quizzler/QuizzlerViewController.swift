@@ -11,7 +11,8 @@ import UIKit
 class QuizzlerViewController: UIViewController {
     
     //Place your instance variables here
-    
+    let questionsList = QuestionBank().list
+    var randNum: Int = 0
     
     @IBOutlet weak var questionLabel: UILabel!
     @IBOutlet weak var scoreLabel: UILabel!
@@ -20,22 +21,31 @@ class QuizzlerViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        updateUI()
     }
 
 
     @IBAction func answerPressed(_ sender: AnyObject) {
-  
+        checkAnswer()
+        nextQuestion()
+    }
+    
+    func randomQuestion(){
+        randNum = Int.random(in: 0...questionsList.count-1)
     }
     
     
+    
     func updateUI() {
-      
+        randomQuestion()
+        let question = questionsList[randNum]
+        questionLabel.text = question.questionText
+        
     }
     
 
     func nextQuestion() {
-        
+        updateUI()
     }
     
     
