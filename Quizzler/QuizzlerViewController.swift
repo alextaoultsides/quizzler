@@ -14,6 +14,7 @@ class QuizzlerViewController: UIViewController {
     var questionsList = QuestionBank().list
     var pickedAnswer: Bool = false
     var correctAnswers: Int = 0
+    var questionNumber: Int = 0
     var randNum: Int = 0
     
     @IBOutlet weak var questionLabel: UILabel!
@@ -24,7 +25,7 @@ class QuizzlerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         scoreLabel.text = "0"
-        progressLabel.text = "0"
+        progressLabel.text = "0/\(questionsList.count)"
         updateUI()
     }
 
@@ -49,10 +50,14 @@ class QuizzlerViewController: UIViewController {
     
     
     func updateUI() {
-        
+        questionNumber += 1
+        progressLabel.text = "\(questionNumber)/\(QuestionBank().list.count)"
         randomQuestion()
         let question = questionsList[randNum]
         questionLabel.text = question.questionText
+        
+        progressBar.frame.size.width = (self.view.frame.size.width / 13) * CGFloat(questionNumber)
+        
         
     }
     
@@ -82,10 +87,12 @@ class QuizzlerViewController: UIViewController {
     
     
     func startOver() {
-        progressLabel.text = "0"
+        
         scoreLabel.text = "0"
         correctAnswers = 0
+        questionNumber = 0
         questionsList = QuestionBank().list
+        progressLabel.text = "0\(questionsList.count)"
         updateUI()
     }
     
